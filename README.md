@@ -1,2 +1,2 @@
-# GasparQ.github.io
-This site is the propterty of Quentin Gasparotto.
+# SaltAPI
+This is the site presenting the SaltAPI, by Salty Studio.
