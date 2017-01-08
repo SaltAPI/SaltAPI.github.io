@@ -34,7 +34,8 @@
     <div class="container topnav">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -46,7 +47,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#about">About</a>
+                    <a href="discover.html">Découvrir l'API</a>
                 </li>
                 <li>
                     <a href="module.html">Implémenter un module</a>
@@ -91,40 +92,214 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Core</h2>
-                <p>Le module Core représente le coeur du programme. Il va être le premier module chargé, et s'occuper de
-                    lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
-                    <a href="#config-loader">Config Loader.</a></p>
+                <div class="col-md-6">
+                    <pre class="prettyprint" style="font-weight: normal">
+#ifndef API_V2_ICORE_HPP
+#define API_V2_ICORE_HPP
+
+#include &lt;vector&gt;
+#include "IModule.hpp"
+
+class IModuleLoader;
+class IConfig;
+
+namespace Module {
+
+     class ICore {
+     public:
+         virtual bool Run(std::vector&lt;std::string&gt; const &opts, IModuleLoader *moduleLoader) = 0;
+
+         virtual IConfig const &GetConfig() const = 0;
+
+     public:
+         virtual IModule *Get(std::string const &name) const = 0;
+
+         virtual IModule *Get(IModule::Type type) const = 0;
+
+         template&lt;class T&gt;
+             virtual T *Get() const = 0;
+         };
+     }
+    #endif //API_V2_ICORE_HPP</pre>
+                </div>
+                <div class="col-md-6">
+                    <p>Le module Core représente le coeur du programme. Il va être le premier module chargé, et
+                        s'occuper de
+                        lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
+                        <a href="#config-loader">Config Loader.</a></p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>Logging</h2>
-                <p>Ce module permet de tracer l'activité de chaque module couramment chargé par le Core.</p>
+                <div class="col-md-6">
+                    <pre class="prettyprint">
+#ifndef API_V2_ILOGGING_HPP
+#define API_V2_ILOGGING_HPP
+
+#include &lt;string&gt;
+
+ namespace Module {
+     class ILogging {
+     public:
+         enum Type {
+             Emergency,
+             Alert,
+             Critic,
+             Error,
+             Warning,
+             Notice,
+             Info,
+             Debug
+         };
+
+         virtual void Log(std::string const &msg, Type type = Type::Info) const = 0;
+
+    };
+}
+
+#endif //API_V2_ILOGGING_HPP</pre>
+                </div>
+                <div class="col-md-6">
+                    <p>Ce module permet de tracer l'activité de chaque module couramment chargé par le Core.</p>
+                </div>
             </div>
         </div>
         <div class="row" id="config-loader">
             <div class="col-md-12">
                 <h2>Config Loader</h2>
+                <div class="col-md-6">
+                    <pre class="prettyprint">
+#ifndef API_V2_ICONFIGLOADER_HPP
+#define API_V2_ICONFIGLOADER_HPP
+
+#include &lt;string&gt;
+
+class IConfig {};
+
+namespace Module {
+    class IConfigLoader {
+    public:
+        virtual IConfig *LoadConfig(std::string const &path) = 0;
+    };
+}
+
+#endif //API_V2_ICONFIGLOADER_HPP</pre>
+                </div>
+                <div class="col-md-6">
                 <p>Ce module va s'occuper de charger la configuration par défault, ainsi que celle du fichier s'il est
                     fourni.</p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>Network</h2>
-                <p>Ce module va permettre toute la gestion des connexions réseau.</p>
+                <div class="col-md-6">
+                    <pre class="prettyprint">
+#ifndef API_V2_INETWORK_HPP
+#define API_V2_INETWORK_HPP
+
+namespace HTTP {
+    class Request;
+
+    class Response;
+
+    class ProcessingList;
+}
+
+namespace Module {
+    class INetwork {
+    public:
+        virtual bool Raise(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
+
+        virtual bool OnRequest() = 0;
+
+        virtual bool Send(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
+    };
+}
+
+#endif //API_V2_INETWORK_HPP</pre>
+                </div>
+                <div class="col-md-6">
+                    <p>Ce module va permettre toute la gestion des connexions réseau.</p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>File Serve</h2>
-                <p>Ce module va chercher des fichiers en fonction des chemins qui lui sont fournis.</p>
+                <div class="col-md-6">
+                        <pre class="prettyprint">
+#ifndef API_V2_IFILESERVE_HPP
+#define API_V2_IFILESERVE_HPP
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+
+namespace Module {
+    class IFileServe {
+    public:
+        virtual unsigned int GetFileSize(std::string const &path) const = 0;
+
+        virtual std::ifstream &GetFile(std::string const &path) const = 0;
+
+        virtual char *GetFileByRange(unsigned int offset, unsigned int size) const = 0;
+    };
+}
+#endif //API_V2_IFILESERVE_HPP</pre>
+                </div>
+                <div class="col-md-6">
+                    <p>Ce module va chercher des fichiers en fonction des chemins qui lui sont fournis.</p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>Module Handler</h2>
-                <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
+                <div class="col-md-6">
+                    <pre class="prettyprint">
+#ifndef API_V2_IMODULE_HPP
+#define API_V2_IMODULE_HPP
+
+#include <string>
+
+namespace Module {
+    class ICore;
+
+    class IModule {
+    public:
+        enum Type {
+            Core,
+            Logging,
+            ConfigLoader,
+            Network,
+            FileServe,
+            ModuleHandler
+        };
+
+    public:
+        virtual std::string const &GetName() const = 0;
+
+        virtual Type GetType() const = 0;
+
+    public:
+        virtual bool Load() = 0;
+
+        virtual bool Unload() = 0;
+
+    public:
+        virtual IModule *GetModule(ICore &core) const = 0;
+    };
+
+}
+
+#endif //API_V2_IMODULE_HPP</pre>
+                </div>
+                <div class="col-md-6">
+                    <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -141,7 +316,7 @@
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
                     <li>
-                        <a href="#about">About</a>
+                        <a href="discover.html">Découvrir l'API</a>
                     </li>
                     <li class="footer-menu-divider">&sdot;</li>
                     <li>
@@ -167,5 +342,9 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- google code prettify -->
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
 </body>
 </html>
