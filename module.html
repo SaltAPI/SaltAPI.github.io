@@ -72,34 +72,52 @@
     <!-- /.container -->
 </nav>
 
-<section class="padding-top-50">
+<section id="module">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>Implémenter un module</h1>
                 <p>Nous allons voir commenter implémenter facilement un module dans cette section.</p>
+                <nav class="subnav">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active"><a href="#introduction" data-scroll="introduction">Introduction</a>
+                        </li>
+                        <li role="presentation"><a href="#core" data-scroll="core">Core</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="logging">Logging</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="config-loader">Config Loader</a>
+                        </li>
+                        <li role="presentation"><a href="discover.html" data-scroll="network">Network</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="file-serve">File Serve</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="module">Module Handler</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="example">Exemple
+                            d'implémentation</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Les différents types de modules</h2>
-                <p>Il existe 6 types de modules :</p>
-                <ul>
-                    <li>Core</li>
-                    <li>Logging</li>
-                    <li>Config Loader</li>
-                    <li>Network</li>
-                    <li>File Serve</li>
-                    <li>Module Handler</li>
-                </ul>
-                <p>Ils dérivent tous d'une interface / abstract. Une section sera dédiée pour l'implémentation de chacun
-                    de ces modules.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Core</h2>
-                <div class="col-md-6">
+        <div class="wrapper">
+            <section class="row" id="introduction" data-anchor="introduction">
+                <div class="col-md-12">
+                    <h2>Introduction</h2>
+                    <h3>Les différents types de modules</h3>
+                    <p>Il existe 6 types de modules :</p>
+                    <ul>
+                        <li>Core</li>
+                        <li>Logging</li>
+                        <li>Config Loader</li>
+                        <li>Network</li>
+                        <li>File Serve</li>
+                        <li>Module Handler</li>
+                    </ul>
+                    <p>Ils dérivent tous d'une interface / abstract. Une section sera dédiée pour l'implémentation de
+                        chacun
+                        de ces modules.</p>
+                </div>
+            </section>
+            <section class="row" id="core" data-anchor="core">
+                <div class="col-md-12">
+                    <h2>Core</h2>
+                    <div class="col-md-6">
                     <pre class="prettyprint" style="font-weight: normal">
 #ifndef API_V2_ICORE_HPP
 #define API_V2_ICORE_HPP
@@ -128,19 +146,19 @@ namespace Module {
          };
      }
     #endif //API_V2_ICORE_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Le module Core représente le coeur du programme. Il va être le premier module chargé, et
+                            s'occuper de
+                            lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
+                            <a href="#config-loader">Config Loader.</a></p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Le module Core représente le coeur du programme. Il va être le premier module chargé, et
-                        s'occuper de
-                        lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
-                        <a href="#config-loader">Config Loader.</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Logging</h2>
-                <div class="col-md-6">
+            </section>
+            <section class="row" data-anchor="logging">
+                <div class="col-md-12">
+                    <h2>Logging</h2>
+                    <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_ILOGGING_HPP
 #define API_V2_ILOGGING_HPP
@@ -167,16 +185,16 @@ namespace Module {
 }
 
 #endif //API_V2_ILOGGING_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Ce module permet de tracer l'activité de chaque module couramment chargé par le Core.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Ce module permet de tracer l'activité de chaque module couramment chargé par le Core.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="config-loader">
-            <div class="col-md-12">
-                <h2>Config Loader</h2>
-                <div class="col-md-6">
+            </section>
+            <section class="row" id="config-loader" data-anchor="config-loader">
+                <div class="col-md-12">
+                    <h2>Config Loader</h2>
+                    <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_ICONFIGLOADER_HPP
 #define API_V2_ICONFIGLOADER_HPP
@@ -193,17 +211,18 @@ namespace Module {
 }
 
 #endif //API_V2_ICONFIGLOADER_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Ce module va s'occuper de charger la configuration par défault, ainsi que celle du fichier
+                            s'il est
+                            fourni.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                <p>Ce module va s'occuper de charger la configuration par défault, ainsi que celle du fichier s'il est
-                    fourni.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Network</h2>
-                <div class="col-md-6">
+            </section>
+            <section class="row" data-anchor="network">
+                <div class="col-md-12">
+                    <h2>Network</h2>
+                    <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_INETWORK_HPP
 #define API_V2_INETWORK_HPP
@@ -228,16 +247,16 @@ namespace Module {
 }
 
 #endif //API_V2_INETWORK_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Ce module va permettre toute la gestion des connexions réseau.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Ce module va permettre toute la gestion des connexions réseau.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>File Serve</h2>
-                <div class="col-md-6">
+            </section>
+            <section class="row" data-anchor="file-serve">
+                <div class="col-md-12">
+                    <h2>File Serve</h2>
+                    <div class="col-md-6">
                         <pre class="prettyprint">
 #ifndef API_V2_IFILESERVE_HPP
 #define API_V2_IFILESERVE_HPP
@@ -256,21 +275,21 @@ namespace Module {
     };
 }
 #endif //API_V2_IFILESERVE_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Ce module va chercher des fichiers en fonction des chemins qui lui sont fournis.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Ce module va chercher des fichiers en fonction des chemins qui lui sont fournis.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Module Handler</h2>
-                <div class="col-md-6">
+            </section>
+            <section class="row" data-anchor="module">
+                <div class="col-md-12">
+                    <h2>Module Handler</h2>
+                    <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_IMODULE_HPP
 #define API_V2_IMODULE_HPP
 
-#include <string>
+#include &lt;string&gt;
 
 namespace Module {
     class ICore;
@@ -303,11 +322,15 @@ namespace Module {
 }
 
 #endif //API_V2_IMODULE_HPP</pre>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
-                </div>
-            </div>
+            </section>
+            <section class="row" data-anchor="example">
+                <h2>Exemple d'implémentation</h2>
+            </section>
         </div>
     </div>
 </section>
@@ -354,6 +377,9 @@ namespace Module {
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
+
+<!-- Script -->
+<script src="js/myscript.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>

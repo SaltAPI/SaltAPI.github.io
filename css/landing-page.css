@@ -184,3 +184,16 @@ section h2 {
 pre {
     font-weight: normal;
 }
+
+h1 {
+    padding-top: 50px;
+}
+
+.subnav {
+    z-index: 20;
+}
+
+.subnav.fixed {
+    position: fixed;
+    top: 50px;
+}
