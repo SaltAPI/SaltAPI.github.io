@@ -2,18 +2,25 @@
  * Created by veyrie_f on 09/01/17.
  */
 
+var canScroll = true;
+
 $('nav a').on('click', function() {
-    console.log($(this).attr('data-scroll'));
+    if (!canScroll)
+        return false;
+
+    canScroll = false;
+    // console.log($(this).attr('data-scroll'));
 
     var scrollAnchor = $(this).attr('data-scroll'),
         scrollPoint = $('section[data-anchor="' + scrollAnchor + '"]').offset().top - 100;
 
     $('body,html').animate({
         scrollTop: scrollPoint
-    }, 500);
+    }, 500, "swing", function () {
+        canScroll = true;
+    });
 
     return false;
-
 });
 
 $(window).scroll(function() {
