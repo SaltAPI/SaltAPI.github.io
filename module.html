@@ -317,29 +317,9 @@ namespace Module {
 namespace Module {
     class ICore;
 
-    class IModule {
+    class IHTTPHandle {
     public:
-        enum Type {
-            Core,
-            Logger,
-            ConfigLoader,
-            Network,
-            FileServe,
-            HTTPHandle
-        };
-
-    public:
-        virtual std::string const &GetName() const = 0;
-
-        virtual Type GetType() const = 0;
-
-    public:
-        virtual bool Load() = 0;
-
-        virtual bool Unload() = 0;
-
-    public:
-        virtual IModule *GetModule(ICore &core) const = 0;
+        virtual bool Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
     };
 
 }
@@ -348,9 +328,8 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
-                        <p><code class="prettyprint">enum Type</code><br>Spécifie le type de module (voir les autres
-                            sections).</p>
-                        <p><code class="prettyprint">GetName()</code><br>Récupère le nom du module.</p>
+                        <p><code class="prettyprint">Handle()</code><br>Il s'agit du callback appelé à chaque fois
+                            que le module est invoqué.</p>
                     </div>
                 </div>
             </section>
