@@ -356,6 +356,126 @@ namespace Module {
             </section>
             <section class="row" data-anchor="example">
                 <h2>Exemple d'implémentation</h2>
+                <div class="col-md-12">
+                    <p>Maintenant que vous connaissez les caractériques de chaque module, voyons à présent une
+                    implémentation concrète d'un module avec la SaltAPI.</p>
+                    <p>Tout d'abord, créons une classe <code>HelloWord</code> qui nous servira d'exemple.
+                    Son but va être de modifier le header en ajoutant le contenu <code>Content-type: text/plain</code>,
+                    changer le body par <code class="prettyprint">"HelloWorld"</code>, et finalement changer le status code à
+                    <code class="prettyprint">200</code>.</p>
+                    <p>Étant sur Windows, il ne faut pas oublier deux choses: nous allons créer des librairies
+                    dynamiques, ce qui implique d'ajouter un <code class="prettyprint">extern "C"</code> afin de
+                    correctement récupérer les symboles, et ajouter <code class="prettyprint">EXPORT</code> en incluant
+                    le fichier <code class="prettyprint">"DllExport.h"</code>.</p>
+                    <pre class="prettyprint">
+#include "Module/IHTTPHandle.hpp"
+#include "Module/AModule.hpp"
+#include "DllExport.hpp"
+
+extern "C"
+{
+    class EXPORT HelloWorld : public Module::IHTTPHandle, public Module::AModule
+    {
+    public:
+        HelloWorld(Module::ICore &core);
+
+        virtual ~HelloWorld();
+    };
+}</pre>
+                    <p>Une étape importante est l'implémentation du contructeur de la classe parent, <code class="prettyprint">Module::AModule</code>.
+                    En effet il va à la fois déterminer le rôle de notre module, ainsi que son nom afin de plus
+                    facilement le retrouver. Le notre interviendra en tant que module HTTP, et s'appelera "HelloWorld".</p>
+                    <pre class="prettyprint">
+HelloWorld::HelloWorld(Module::ICore &core): Module::AModule(core, HTTP, "HelloWorld") {}</pre>
+                    <p>Implémentons maintenant la méthode <code class="prettyprint">bool Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl);</code>
+                    (implémentée dans la classe Module::HTTPHandle). Celle-ci est très succinte :</p>
+                    <pre class="prettyprint">
+bool HelloWorld::Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) {
+    res->GetHeader().Add("Content-Type", "text/plain");
+    res->SetBody("HelloWorld");
+    res->SetStatusCode(200);
+    return true;
+}</pre>
+                    <p>Seule une étape nous sépare maintenant d'un module fonctionnel ! Il nous manque la méthode capable
+                    de cloner notre module, dont la signature <code class="prettyprint">Module::IModule *GetModule(Module::ICore &core) const;</code>
+                        est implémentée dans Module::AModule. Copiez les valeurs nécessaires à la construction
+                        (dans l'exemple nous n'avons pas d'attributs).</p>
+                    <pre class="prettyprint">
+Module::IModule* HelloWorld::GetModule(Module::ICore &core) const {
+    return new HelloWorld(core);
+}</pre>
+                    <p>Félicitations ! Votre module est désormais fonctionnel. Un petit récapitulatif :</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>HelloWorld.hpp</h3>
+                            <pre class="prettyprint">
+#ifndef API_V2_HELLOWORLD_HPP
+#define API_V2_HELLOWORLD_HPP
+
+#include "Module/IHTTPHandle.hpp"
+#include "Module/AModule.hpp"
+#include "DllExport.hpp"
+
+extern "C"
+{
+    class EXPORT HelloWorld : public Module::IHTTPHandle, public Module::AModule
+    {
+    public:
+        HelloWorld(Module::ICore &core);
+
+        virtual ~HelloWorld();
+
+    public:
+        bool Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl);
+
+    public:
+        Module::IModule *GetModule(Module::ICore &core) const override;
+    };
+}
+
+#endif //API_V2_HELLOWORLD_HPP</pre>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>HelloWorld.cpp</h3>
+                            <pre class="prettyprint">
+#include "HelloWorld.hpp"
+#include "HTTP/Request.hpp"
+#include "HTTP/Response.hpp"
+#include "HTTP/ProcessingList.hpp"
+
+HelloWorld::HelloWorld(Module::ICore &core): Module::AModule(core, HTTP, "HelloWorld") {
+
+}
+
+HelloWorld::~HelloWorld() {
+
+}
+
+bool HelloWorld::Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) {
+    res->GetHeader().Add("Content-Type", "text/plain");
+    res->SetBody("HelloWorld");
+    res->SetStatusCode(200);
+    return true;
+}
+
+Module::IModule* HelloWorld::GetModule(Module::ICore &core) const {
+    return new HelloWorld(core);
+}
+
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+                <!--<p>Vous pouvez consulter plus en détail le <a href="Doxygen/html/index.html">code documenté</a> afin d'obtenir plus d'informations.</p>-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="center-div margin-bot-30 margin-top-20">
+                            <a href="Doxygen/html/index.html" class="btn btn-default btn-lg">
+                                <span class="network-name">Consulter la documentation</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
