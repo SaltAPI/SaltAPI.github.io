@@ -154,12 +154,18 @@ namespace Module {
                             s'occuper de
                             lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
                             <a href="#config-loader">Config Loader.</a></p>
+                        <p><code class="prettyprint">Run()</code><br>Permet de lancer le fonctionnement du Core.
+                            Il requiert les arguments du main, ainsi qu'un Module Loader.</p>
+                        <p><code class="prettyprint">GetConfig()</code><br>Permet de récupérer la configuration actuelle
+                            du Core.</p>
+                        <p><code class="prettyprint">Get()</code><br>Permet de récupérer un module du Core.
+                            Il est possible de retrouver un module par son nom, ou encore son Enum.</p>
                     </div>
                 </div>
             </section>
             <section class="row" data-anchor="logging">
                 <div class="col-md-12">
-                    <h2>Logging</h2>
+                    <h2>Logger</h2>
                     <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_ILOGGING_HPP
@@ -168,7 +174,7 @@ namespace Module {
 #include &lt;string&gt;
 
  namespace Module {
-     class ILogging {
+     class ILogger {
      public:
          enum Type {
              Emergency,
@@ -190,6 +196,10 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Ce module permet de tracer l'activité de chaque module couramment chargé par le Core.</p>
+                        <p><code class="prettyprint">enum Type</code><br>Permet de spécifier le degré d'importance
+                            des messages affichés (Debug étant de basse priorité, et Emergency de niveau critique).</p>
+                        <p><code class="prettyprint">Log()</code><br>Affiche des messages, en prenant en compte
+                            leur priorité définie précédement.</p>
                     </div>
                 </div>
             </section>
@@ -216,8 +226,9 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Ce module va s'occuper de charger la configuration par défault, ainsi que celle du fichier
-                            s'il est
-                            fourni.</p>
+                            s'il est fourni.</p>
+                        <p><code class="prettyprint">LoadConfig()</code><br>Charge la configuration située au chemin
+                            passé en argument, et renvoie un handler sur celle-ci.</p>
                     </div>
                 </div>
             </section>
@@ -240,7 +251,7 @@ namespace HTTP {
 namespace Module {
     class INetwork {
     public:
-        virtual bool Raise(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
+        virtual bool Start(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
 
         virtual bool OnRequest() = 0;
 
@@ -252,6 +263,10 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Ce module va permettre toute la gestion des connexions réseau.</p>
+                        <p><code class="prettyprint">Start()</code><br>Permet de lancer le réseau.</p>
+                        <p><code class="prettyprint">OnRequest()</code><br>Callback appelé lors de la reception
+                            d'une requête.</p>
+                        <p><code class="prettyprint">Send()</code><br>Envoie des messages sur le réseau.</p>
                     </div>
                 </div>
             </section>
@@ -280,12 +295,18 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Ce module va chercher des fichiers en fonction des chemins qui lui sont fournis.</p>
+                        <p><code class="prettyprint">GetFileSize()</code><br>Récupère la taille du fichier situé au
+                             chemin donné en paramètre.</p>
+                        <p><code class="prettyprint">GetFile()</code><br>Récupère le fichier situé au chemin
+                            donné en paramètre, sous la forme d'un stream.</p>
+                        <p><code class="prettyprint">GetFileByRange()</code><br>Renvoie un ensemble de caractères
+                            défini par un début et une taille.</p>
                     </div>
                 </div>
             </section>
             <section class="row" data-anchor="module">
                 <div class="col-md-12">
-                    <h2>Module Handler</h2>
+                    <h2>HTTP Handle</h2>
                     <div class="col-md-6">
                     <pre class="prettyprint">
 #ifndef API_V2_IMODULE_HPP
@@ -296,7 +317,7 @@ namespace Module {
 namespace Module {
     class ICore;
 
-    class IModule {
+    class IHTTPHandle {
     public:
         enum Type {
             Core,
@@ -327,6 +348,9 @@ namespace Module {
                     </div>
                     <div class="col-md-6">
                         <p>Il s'occupe de la gestion des modules liés au protocole HTTP.</p>
+                        <p><code class="prettyprint">enum Type</code><br>Spécifie le type de module (voir les autres
+                            sections).</p>
+                        <p><code class="prettyprint">GetName()</code><br>Récupère le nom du module.</p>
                     </div>
                 </div>
             </section>
