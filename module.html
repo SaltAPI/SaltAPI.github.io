@@ -388,7 +388,7 @@ extern "C"
                     <pre class="prettyprint">
 HelloWorld::HelloWorld(Module::ICore &core): Module::AModule(core, HTTP, "HelloWorld") {}</pre>
                     <p>Implémentons maintenant la méthode <code class="prettyprint">bool Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl);</code>
-                    (implémentée dans la classe Module::HTTPHandle). Celle-ci est très succinte :</p>
+                    (implémentée dans la classe Module::IHTTPModule). Celle-ci est très succinte :</p>
                     <pre class="prettyprint">
 bool HelloWorld::Handle(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) {
     res->GetHeader().Add("Content-Type", "text/plain");

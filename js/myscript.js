@@ -41,3 +41,11 @@ $(window).scroll(function() {
         $('nav.subnav ul li:first').addClass('active');
     }
 }).scroll();
+
+/** Image pop up **/
+$(function() {
+    $('.pop').on('click', function() {
+        $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+        $('#imagemodal').modal('show');
+    });
+});

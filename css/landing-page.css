@@ -226,3 +226,13 @@ h1 {
     display: block;
     text-align: center
 }
+
+.modal-dialog {
+    min-width: 98%;
+    max-width: 100%;
+}
+
+.image-presentation {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
