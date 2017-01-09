@@ -83,12 +83,24 @@
             <!--</div>-->
             <div class="col-md-12">
                 Nous avons pris soin de documenter au mieux notre code, afin de rendre la SaltAPI accessible à tous.
-                Vous trouverez ici toutes les informations nécessaires pour comprendre le fonctionnement de notre HTTPd.
+                Vous trouverez ici toutes les informations nécessaires pour comprendre le fonctionnement de notre HTTPd,
+                ainsi que son système de modules. Voici la liste des sections, toutes illustrées :
             </div>
+
+            <nav class="subnav">
+                <div class="container">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active"><a href="#architecture" data-scroll="architecture">Architecture</a>
+                        </li>
+                        <li role="presentation"><a href="#flow" data-scroll="flow">Flux d'exécution</a></li>
+                        <li role="presentation"><a href="#interactions" data-scroll="interactions">Intéractions</a></li>
+                    </ul>
+                </div>
+            </nav>
 
         </div>
         <div class="wrapper">
-            <section class="row" id="architecture">
+            <section class="row" id="architecture" data-anchor="architecture">
                 <div class="col-md-12">
                     <h2>L'architecture</h2>
                     <div class="col-md-6 image-presentation">
@@ -104,7 +116,7 @@
                 </div>
             </section>
 
-            <section class="row" id="flow">
+            <section class="row" id="flow" data-anchor="flow">
                 <div class="col-md-12">
                     <h2>Le flux d'exécution</h2>
                     <div class="col-md-12 image-presentation">
@@ -115,7 +127,7 @@
                 </div>
             </section>
 
-            <section class="row" id="interactions">
+            <section class="row" id="interactions" data-anchor="interactions">
                 <div class="col-md-12">
                     <h2>Les intéractions</h2>
                     <div class="col-md-6 image-presentation">
