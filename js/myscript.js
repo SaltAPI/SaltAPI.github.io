@@ -4,7 +4,7 @@
 
 var canScroll = true;
 
-$('nav a').on('click', function() {
+$('a[data-scroll]').on('click', function() {
     if (!canScroll)
         return false;
 
