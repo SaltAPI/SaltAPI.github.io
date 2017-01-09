@@ -232,7 +232,16 @@ h1 {
     max-width: 100%;
 }
 
+.modal-body {
+    text-align: center;
+}
+
 .image-presentation {
     margin-top: 35px;
     margin-bottom: 35px;
+}
+
+.image-fullsize {
+    max-width: 100%;
+    height: auto;
 }
