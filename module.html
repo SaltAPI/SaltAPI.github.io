@@ -84,12 +84,12 @@
                         <li role="presentation" class="active"><a href="#introduction" data-scroll="introduction">Introduction</a>
                         </li>
                         <li role="presentation"><a href="#core" data-scroll="core">Core</a></li>
-                        <li role="presentation"><a href="discover.html" data-scroll="logging">Logging</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="logging">Logger</a></li>
                         <li role="presentation"><a href="discover.html" data-scroll="config-loader">Config Loader</a>
                         </li>
                         <li role="presentation"><a href="discover.html" data-scroll="network">Network</a></li>
                         <li role="presentation"><a href="discover.html" data-scroll="file-serve">File Serve</a></li>
-                        <li role="presentation"><a href="discover.html" data-scroll="module">Module Handler</a></li>
+                        <li role="presentation"><a href="discover.html" data-scroll="module">HTTP Module</a></li>
                         <li role="presentation"><a href="discover.html" data-scroll="example">Exemple
                             d'implémentation</a></li>
                     </ul>
@@ -105,11 +105,11 @@
                     <p>Il existe 6 types de modules :</p>
                     <ul>
                         <li>Core</li>
-                        <li>Logging</li>
+                        <li>Logger</li>
                         <li>Config Loader</li>
                         <li>Network</li>
                         <li>File Serve</li>
-                        <li>Module Handler</li>
+                        <li>HTTP Module</li>
                     </ul>
                     <p>Ils dérivent tous d'une interface / abstract. Une section sera dédiée pour l'implémentation de
                         chacun
@@ -153,7 +153,7 @@ namespace Module {
                         <p>Le module Core représente le coeur du programme. Il va être le premier module chargé, et
                             s'occuper de
                             lancer tous les modules obligatoires. Il va aussi se charger de lancer le module
-                            <a href="#config-loader">Config Loader.</a></p>
+                            Config Loader.</p>
                         <p><code class="prettyprint">Run()</code><br>Permet de lancer le fonctionnement du Core.
                             Il requiert les arguments du main, ainsi qu'un Module Loader.</p>
                         <p><code class="prettyprint">GetConfig()</code><br>Permet de récupérer la configuration actuelle
@@ -321,7 +321,7 @@ namespace Module {
     public:
         enum Type {
             Core,
-            Logging,
+            Logger,
             ConfigLoader,
             Network,
             FileServe,
