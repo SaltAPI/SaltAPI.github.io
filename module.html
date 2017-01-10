@@ -410,6 +410,8 @@ extern "C"
     public:
         Module::IModule *GetModule(Module::ICore &core) const override;
     };
+
+    Module::IModule	*LoadModule(Module::ICore &core);
 }
 
 #endif //API_V2_HELLOWORLD_HPP</pre>
@@ -439,6 +441,10 @@ bool HelloWorld::Handle(HTTP::Request *req, HTTP::Response *res, HTTP::Processin
 
 Module::IModule* HelloWorld::GetModule(Module::ICore &core) const {
     return new HelloWorld(core);
+}
+
+Module::IModule	*CreateModule(Module::ICore &core) {
+	return new HelloWorld(core);
 }
 
                             </pre>
