@@ -269,6 +269,11 @@ blockquote {
     padding-bottom: 30px;
 }
 
+[class*="item-list"] {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .item-list-left {
     text-align: left;
 }
