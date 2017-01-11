@@ -134,12 +134,19 @@
                     </div>
                 </div>
 
-                <div class="col-md-12" id="details">
+                <div class="col-md-12 text-justify" id="details">
                     <h3>Plus de détails :</h3>
 
                     <div class="col-md-12" id="fragment1">
                         <div class="col-md-6">
-                            <p>Super description</p>
+                            <p>Pour lancer le serveur web, l'utilisateur lance la commande <code>./httpd</code>.<br>
+                                Le <code>Module Loader</code> n'est pas un module, mais juste une classe inscrite dans le binaire <code>httpd</code> qui va permettre de charger des modules.
+                                Après le lancement du serveur ici représenté avec <code>HTTPd Start</code>, le <code>Module Loader</code> va être exécuté par celui-ci.
+                                Le <code>Module Loader</code> va charger le <code>Core Module</code>. Dès lors, nous sortons de ladite "coquille vide" qu'est le serveur web.
+                                Le <code>Core Module</code> va à son tour charger le <code>Config Loader Module</code> en utilisant le <code>Module Loader</code> dont il possède une référence.
+                                Une configuration par défaut sera appliquée par le <code>Config Loader Module</code> comme par exemple écouter sur le port 80.
+                                Par la suite, une configuration externe du serveur va être cherchée par le <code>Config Loader Module</code> qui va utliser le <code>File Serve Module</code> afin de lire le contenu du fichier.
+                                Si un fichier de configuration a été trouvé et est qu'il est correct, la configuration externe va être appliquée au serveur.</p>
                         </div>
                         <div class="col-md-6">
                             <a href="#fragment1" class="pop">
@@ -155,13 +162,23 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <p>Super description</p>
+                            <p>Une fois la configuration appliquée au serveur, les modules listés dans le fichier de configuration (son format dépend de vous) seront chargés.
+                                Le <code>Network Module</code> couplé à <code>SSL/TLS Module</code> sont dès lors chargés de démarrer la couche réseau et d'écouter sur les différents ports spécifiés dans la configuration du serveur.
+                                Lors d'une requête HTTP d'un client, cette requête est stockée dans une <code>Request list</code> afin du subir un traitement future.
+                                Pour chaque requête dans la <code>Request list</code>, une <code>Processing list</code> générique est générée. Elle contient par défaut, différentes actions définies dans le fichier de configuration.
+                                Il est dès lors possible de traiter plusieurs requêtes de manière simultané, chacune dans un thread.</p>
                         </div>
                     </div>
 
                     <div class="col-md-12" id="fragment3">
                         <div class="col-md-6">
-                            <p>Super description</p>
+                            <p>Une requête HTTP = une <code>Processing list</code> associée.
+                                Toutes les méthodes des modules HTTP de la <code>Processing list</code> reçoivent en paramètres les objets <code>req</code>, <code>res</code> et <code>pl</code>.
+                                L'objet <code>req</code> est une représentation de la requête reçue, on la remplira après avoir parsé la requête du client.
+                                L'objet <code>res</code> est celui qu'il faudra remplir en fonction de <code>req</code>.
+                                Enfin, l'objet <code>pl</code> est la processing liste associée à la requête.
+                                Il est possible d'insérer des actions dans la <code>Pocessing list</code> à n'importe quel endroit.
+                                Par exemple, si l'on détecte que le body de la requête HTTP est compressé, on peut ajouter comme action suivante de le décompresser afin de faciliter son traitement par la suite.</p>
                         </div>
                         <div class="col-md-6">
                             <a href="#fragment3" class="pop">
