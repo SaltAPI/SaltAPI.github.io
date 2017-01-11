@@ -321,3 +321,8 @@ blockquote {
     -o-transition: 1s ease-in-out;
     transition: 1s ease-in-out;
 }
+
+#details section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
