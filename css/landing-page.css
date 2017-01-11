@@ -322,7 +322,7 @@ blockquote {
     transition: 1s ease-in-out;
 }
 
-#details section {
+[id^="fragment"] {
     margin-top: 30px;
     margin-bottom: 30px;
 }
