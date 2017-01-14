@@ -146,8 +146,6 @@ namespace Module {
 
          virtual IModule *Get(IModule::Type type) const = 0;
 
-         template&lt;class T&gt;
-             virtual T *Get() const = 0;
          };
      }
     #endif //API_V2_ICORE_HPP</pre>
@@ -256,9 +254,9 @@ namespace Module {
     public:
         virtual bool Start(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
 
-        virtual bool OnRequest() = 0;
+	virtual void Poll() = 0;
 
-        virtual bool Send(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
+	virtual void Run() = 0;
     };
 }
 
@@ -267,9 +265,8 @@ namespace Module {
                     <div class="col-md-6">
                         <p>Ce module va permettre toute la gestion des connexions réseau.</p>
                         <p><code class="prettyprint">Start()</code><br>Permet de lancer le réseau.</p>
-                        <p><code class="prettyprint">OnRequest()</code><br>Callback appelé lors de la reception
-                            d'une requête.</p>
-                        <p><code class="prettyprint">Send()</code><br>Envoie des messages sur le réseau.</p>
+                        <p><code class="prettyprint">Poll()</code><br>Gestion du réseau de manière non bloquante.</p>
+                        <p><code class="prettyprint">Run()</code><br>Gestion du réseau de manière bloquante.</p>
                     </div>
                 </div>
             </section>
@@ -364,6 +361,8 @@ extern "C"
 
         virtual ~HelloWorld();
     };
+
+    Module::IModule	*LoadModule(Module::ICore &core);
 }</pre>
                     <p>Une étape importante est l'implémentation du contructeur de la classe parent, <code class="prettyprint">Module::AModule</code>.
                     En effet il va à la fois déterminer le rôle de notre module, ainsi que son nom afin de plus
@@ -447,7 +446,7 @@ Module::IModule* HelloWorld::GetModule(Module::ICore &core) const {
     return new HelloWorld(core);
 }
 
-Module::IModule	*CreateModule(Module::ICore &core) {
+Module::IModule	*LoadModule(Module::ICore &core) {
 	return new HelloWorld(core);
 }</pre>
                         </div>
