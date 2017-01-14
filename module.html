@@ -256,9 +256,9 @@ namespace Module {
     public:
         virtual bool Start(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
 
-        virtual bool OnRequest() = 0;
+	virtual void Poll() = 0;
 
-        virtual bool Send(HTTP::Request *req, HTTP::Response *res, HTTP::ProcessingList *pl) = 0;
+	virtual void Run() = 0;
     };
 }
 
