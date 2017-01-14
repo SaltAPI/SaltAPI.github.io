@@ -363,6 +363,8 @@ extern "C"
 
         virtual ~HelloWorld();
     };
+
+    Module::IModule	*LoadModule(Module::ICore &core);
 }</pre>
                     <p>Une étape importante est l'implémentation du contructeur de la classe parent, <code class="prettyprint">Module::AModule</code>.
                     En effet il va à la fois déterminer le rôle de notre module, ainsi que son nom afin de plus
